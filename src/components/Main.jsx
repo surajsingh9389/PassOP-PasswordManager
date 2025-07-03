@@ -149,215 +149,148 @@ const Main = () => {
 
   return (
     <>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick={false}
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
+  <ToastContainer
+    position="top-right"
+    autoClose={5000}
+    hideProgressBar={false}
+    newestOnTop={false}
+    closeOnClick={false}
+    rtl={false}
+    pauseOnFocusLoss
+    draggable
+    pauseOnHover
+    theme="light"
+  />
+
+  <div className="container mx-auto mt-8 px-4 sm:mt-12 sm:px-6 lg:mt-16 lg:px-8 flex flex-col items-center gap-6">
+    {/* Logo / Title */}
+    <div className="w-full max-w-xs sm:max-w-sm md:max-w-md bg-blue-950 rounded-full text-center py-2">
+      <h1 className="text-white text-2xl sm:text-3xl font-bold">
+        <span>&lt;</span> Pass <span className="text-blue-400">Op/&gt;</span>
+      </h1>
+    </div>
+
+    {/* Input Form */}
+    <div className="w-full max-w-md flex flex-col gap-4">
+      <input
+        name="Url"
+        type="text"
+        placeholder="Enter URL"
+        value={save.Url}
+        onChange={handleChange}
+        className="border border-blue-400 w-full rounded-full px-4 py-2 outline-blue-600"
       />
-
-      <div className="min-w-1/2 mx-auto mt-10 flex flex-col gap-3 items-center">
-        <div className="w-50 bg-blue-950 rounded-full text-center">
-          <div className="pb-2 text-white text-2xl font-bold">
-            <span>&lt;</span>
-            Pass
-            <span className="text-blue-400 text-3xl">Op/&gt;</span>
-          </div>
-        </div>
-
-        <div className="flex flex-col gap-2 items-center">
+      <div className="flex flex-wrap sm:flex-nowrap gap-4">
+        <input
+          name="Username"
+          type="text"
+          placeholder="Username"
+          value={save.Username}
+          onChange={handleChange}
+          className="border border-blue-400 flex-1 rounded-full px-4 py-2 outline-blue-600"
+        />
+        <div className="relative flex-1 min-w-[150px]">
           <input
-            name="Url"
-            type="text"
-            placeholder="Enter URL"
-            value={save.Url}
+            ref={hidePassword}
+            name="Password"
+            type="password"
+            placeholder="Password"
+            value={save.Password}
             onChange={handleChange}
-            className="border border-blue-400 w-full rounded-full px-3 py-1 outline-blue-600"
+            className="border border-blue-400 w-full rounded-full px-4 py-2 outline-blue-600"
           />
-          <div className="flex justify-between gap-10">
-            <input
-              name="Username"
-              type="text"
-              placeholder="Username"
-              value={save.Username}
-              onChange={handleChange}
-              className="border border-blue-400 w-3/4 rounded-full px-3 py-1 outline-blue-600"
+          <span className="absolute inset-y-0 right-2 flex items-center" onClick={showPassword}>
+            <img
+              ref={ref}
+              className="h-6 w-6 cursor-pointer"
+              src="/hide.png"
+              alt="toggle"
             />
-            <div className="relative">
-              <input
-                ref={hidePassword}
-                name="Password"
-                type="password"
-                placeholder="Password"
-                value={save.Password}
-                onChange={handleChange}
-                className="border border-blue-400 rounded-full px-3 py-1 outline-blue-600"
-              />
-              <span className="absolute right-0" onClick={showPassword}>
-                <img
-                  ref={ref}
-                  className="px-3 py-2 cursor-pointer"
-                  width={40}
-                  src="/hide.png"
-                  alt=""
-                />
-              </span>
-            </div>
-          </div>
-          <button
-            onClick={savePassword}
-            className="bg-blue-300 rounded-4xl px-4 py-1 hover:bg-blue-400 cursor-pointer flex justify-center items-center gap-2 mt-2 border border-white"
-          >
-            <lord-icon
-              src="https://cdn.lordicon.com/tsrgicte.json"
-              trigger="click"
-            ></lord-icon>
-            <span className="text-lg font font-semibold pb-1">save</span>
-          </button>
-        </div>
-
-        <div className="mt-5 min-w-[700px] min-h-43 bg-blue-200 border border-blue-400 rounded-xl px-3 py-2 pb-4">
-          <div className="text-lg font-bold border-b-2 border-slate-600 py-1 flex justify-between">
-            <span>&lt;&gt;Your Passwords</span>
-            <button
-              onClick={allClear}
-              className="cursor-pointer bg-red-500 hover:bg-red-600 transition-all rounded-full px-3 py-1 text-white font-semibold border border-white"
-            >
-              Clear all
-            </button>
-          </div>
-
-          {passwordsArray.length === 0 && (
-            <div className="px-10 mt-3 font-semibold text-gray-500">
-              No passwords
-            </div>
-          )}
-          {passwordsArray.length !== 0 && (
-            <table className="bg-blue-200 min-w-[700px] rounded-lg overflow-hidden mt-2">
-              <thead className="bg-blue-400">
-                <tr>
-                  <th className="text-left px-2 py-2">URL</th>
-                  <th className="text-left px-2 py-2">Username</th>
-                  <th className="text-left px-2 py-2">Password</th>
-                  <th className="text-left px-2 py-2">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {passwordsArray.map((data, idx) => {
-                  return (
-                    <tr key={idx} className="border-b border-slate-400">
-                      <td className="text-left px-2 py-1">
-                        <div
-                          className="flex items-center gap-1 cursor-pointer"
-                          onClick={() => {
-                            copyText(data.Url);
-                          }}
-                        >
-                          <lord-icon
-                            src="https://cdn.lordicon.com/ueoydrft.json"
-                            trigger="click"
-                            stroke="bold"
-                            style={{
-                              width: "20px",
-                              height: "20px",
-                              backgroundColor: "gray",
-                              borderRadius: "100%",
-                            }}
-                          ></lord-icon>
-                          <a href={data.Url} target="_blank">
-                            {data.Url}
-                          </a>
-                        </div>
-                      </td>
-                      <td className="text-left px-2 py-1">
-                        <div
-                          className="flex items-center gap-1 cursor-pointer"
-                          onClick={() => {
-                            copyText(data.Username);
-                          }}
-                        >
-                          <lord-icon
-                            src="https://cdn.lordicon.com/ueoydrft.json"
-                            trigger="click"
-                            stroke="bold"
-                            style={{
-                              width: "20px",
-                              height: "20px",
-                              backgroundColor: "gray",
-                              borderRadius: "100%",
-                            }}
-                          ></lord-icon>
-                          {data.Username}
-                        </div>
-                      </td>
-                      <td className="text-left px-2 py-1">
-                        <div
-                          className="flex items-center gap-1 cursor-pointer"
-                          onClick={() => {
-                            copyText(data.Password);
-                          }}
-                        >
-                          <lord-icon
-                            src="https://cdn.lordicon.com/ueoydrft.json"
-                            trigger="click"
-                            stroke="bold"
-                            style={{
-                              width: "20px",
-                              height: "20px",
-                              backgroundColor: "gray",
-                              borderRadius: "100%",
-                            }}
-                          ></lord-icon>
-                          {data.Password}
-                        </div>
-                      </td>
-                      <td className="text-left px-2 py-1">
-                        <div className="flex items-center gap-2">
-                          <span
-                            onClick={() => {
-                              deletePassword(data.id);
-                            }}
-                            className="cursor-pointer"
-                          >
-                            <lord-icon
-                              src="https://cdn.lordicon.com/hwjcdycb.json"
-                              trigger="click"
-                              stroke="bold"
-                              style={{ width: "22px", height: "22px" }}
-                            ></lord-icon>
-                          </span>
-
-                          <span
-                            onClick={() => {
-                              editPassword(data.id);
-                            }}
-                            className="cursor-pointer"
-                          >
-                            <lord-icon
-                              src="https://cdn.lordicon.com/fikcyfpp.json"
-                              trigger="click"
-                              stroke="bold"
-                              colors="primary:#121331,secondary:#000000"
-                              style={{ width: "22px", height: "22px" }}
-                            ></lord-icon>
-                          </span>
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          )}
+          </span>
         </div>
       </div>
-    </>
+      <button
+        onClick={savePassword}
+        className="w-full bg-blue-300 hover:bg-blue-400 rounded-full px-4 py-2 text-lg font-semibold text-white flex justify-center items-center gap-2 transition"
+      >
+        <lord-icon src="https://cdn.lordicon.com/tsrgicte.json" trigger="click" />
+        <span>Save</span>
+      </button>
+    </div>
+
+    {/* Password List */}
+    <div className="w-full max-w-3xl mt-6 bg-blue-200 border border-blue-400 rounded-xl p-4">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b-2 border-slate-600 pb-2">
+        <h2 className="text-lg font-bold mb-2 sm:mb-0">&lt;&gt; Your Passwords</h2>
+        <button
+          onClick={allClear}
+          className="bg-red-500 hover:bg-red-600 text-white font-semibold rounded-full px-4 py-1 transition"
+        >
+          Clear all
+        </button>
+      </div>
+
+      {passwordsArray.length === 0 ? (
+        <div className="mt-4 text-center text-gray-500 font-semibold">
+          No passwords
+        </div>
+      ) : (
+        <div className="mt-4 overflow-x-auto">
+          <table className="w-full bg-blue-200 rounded-lg">
+            <thead className="bg-blue-400">
+              <tr>
+                <th className="px-3 py-2 text-left">URL</th>
+                <th className="px-3 py-2 text-left">Username</th>
+                <th className="px-3 py-2 text-left">Password</th>
+                <th className="px-3 py-2 text-left">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {passwordsArray.map((data, idx) => (
+                <tr key={idx} className="border-b border-slate-400">
+                  {['Url', 'Username', 'Password'].map((key) => (
+                    <td key={key} className="px-3 py-2">
+                      <div
+                        className="flex items-center gap-1 cursor-pointer"
+                        onClick={() => copyText(data[key])}
+                      >
+                        <lord-icon
+                          src="https://cdn.lordicon.com/ueoydrft.json"
+                          trigger="click"
+                          stroke="bold"
+                          style={{ width: '20px', height: '20px', backgroundColor: 'gray', borderRadius: '100%' }}
+                        />
+                        {key === 'Url' ? (
+                          <a href={data[key]} target="_blank" rel="noopener noreferrer" className="truncate max-w-[150px] sm:max-w-xs md:max-w-sm">
+                            {data[key]}
+                          </a>
+                        ) : (
+                          <span className="truncate max-w-[150px] sm:max-w-xs md:max-w-sm">
+                            {data[key]}
+                          </span>
+                        )}
+                      </div>
+                    </td>
+                  ))}
+                  <td className="px-3 py-2">
+                    <div className="flex items-center gap-4">
+                      <button onClick={() => deletePassword(data.id)} className="p-1">
+                        <lord-icon src="https://cdn.lordicon.com/hwjcdycb.json" trigger="click" stroke="bold" style={{ width: '22px', height: '22px' }} />
+                      </button>
+                      <button onClick={() => editPassword(data.id)} className="p-1">
+                        <lord-icon src="https://cdn.lordicon.com/fikcyfpp.json" trigger="click" stroke="bold" colors="primary:#121331,secondary:#000000" style={{ width: '22px', height: '22px' }} />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  </div>
+</>
   );
 };
 
